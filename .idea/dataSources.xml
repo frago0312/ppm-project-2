@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:C:\Users\39366\Desktop\ppm2\ecommerce\db.sqlite3</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="mysite" uuid="0f6c9bec-cf49-4391-b68a-38129c05ca61">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://dpg-cpq2qaqj1k6c73e3nakg-a.oregon-postgres.render.com:5432/mysite_j2cq</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
