@@ -2,26 +2,30 @@
 {% load static %}
 {% block content %}
     <div class="row">
-        <div>
-            <h2>Categories</h2>
+        <div class="col-2 d-flex">
             <ul>
-                <li><a href="{% url 'store' %}">All</a></li>
+                <li style="list-style-type: none; font-size: 20px; font-weight: bold">CATEGORIES</li>
+                <li><a class="category-element" href="{% url 'store' %}">All</a></li>
                 {% for category in categories %}
-                    <li><a href="?category={{ category.id }}">{{ category.name }}</a></li>
+                    <li><a class="category-element" href="?category={{ category.id }}">{{ category.name }}</a></li>
                 {% endfor %}
             </ul>
         </div>
-        {% for product in products %}
-        <div class="col-lg-4" style="margin-bottom: 20px">
-            <img class="thumbnail" src="{{product.imageURL}}">
-            <div class="box-element product">
-                <h6><strong>{{ product.name }}</strong></h6>
-                <hr>
-                <button data-product={{ product.id }} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
-                <a class="btn btn-outline-success" href="#">View</a>
-                <h4 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}</strong></h4>
+        <div class="col-10 d-flex justify-content-center align-items-center flex-wrap">
+            {% for product in products %}
+            <div class="col-lg-4" style="margin-bottom: 20px">
+                <div class="card" style="width: 90%">
+                    <img class="thumbnail" src="{{product.imageURL}}">
+                    <div class="box-element product">
+                        <h6><strong>{{ product.name }}</strong></h6>
+                        <hr>
+                        <button data-product={{ product.id }} data-action="add" class="btn btn-outline-success add-btn update-cart">Add to Cart</button>
+                        <h4 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}</strong></h4>
+                    </div>
+                </div>
+
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 {% endblock content %}
