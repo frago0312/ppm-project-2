@@ -99,3 +99,6 @@ class ShippingAddress (models.Model):
 
     def __str__(self):
         return self.address
+
+    class Meta:
+        verbose_name_plural = "Addresses"
