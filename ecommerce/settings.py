@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-sv3d!+0^p0z@i$c()og8y@roan3iydp&by7%&c5mt110qe&cvu"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -132,6 +132,8 @@ if not DEBUG:
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+
 
 MEDIA_URL = '/images/'
 
