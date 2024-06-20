@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 import json
 import datetime
 
 from .models import *
+from .models import Product
 from .forms import CreateUserForm
 from .utils import cookieCart, cartData, guestOrder
 
@@ -16,24 +19,76 @@ def registerPage(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request, 'Account was created for ' + user)
+
+            return redirect('login')
 
     context = {'form': form}
     return render(request, 'store/register.html', context)
 
 
 def loginPage(request):
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('store')
+        else:
+            messages.info(request, 'Username OR password is incorrect')
+
     context = {}
     return render(request, 'store/login.html', context)
 
 
+def logoutUser(request):
+    logout(request)
+    return redirect('store')
 
-def store(request):
+
+def product_search(request):
+    query = request.GET.get('q')
+    if query:
+        products = Product.objects.filter(name__icontains=query)
+    else:
+        products = Product.objects.all()
 
     data = cartData(request)
     cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
 
-    products = Product.objects.all()
-    context = {'products': products, 'cartItems': cartItems}
+    context = {
+        'products': products,
+        'items': items,
+        'order': order,
+        'cartItems': cartItems
+    }
+    return render(request, 'store/product_search.html', context)
+
+
+def store(request):
+    data = cartData(request)
+    cartItems = data['cartItems']
+
+    category_id = request.GET.get('category')
+    if category_id:
+        products = Product.objects.filter(category_id=category_id)
+    else:
+        products = Product.objects.all()
+
+    categories = Category.objects.all()
+
+    context = {
+        'products': products,
+        'cartItems': cartItems,
+        'categories': categories
+    }
     return render(request, 'store/store.html', context)
 
 

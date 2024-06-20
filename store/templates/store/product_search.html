@@ -1,18 +1,13 @@
 {% extends 'store/main.html' %}
 {% load static %}
+
 {% block content %}
-    <div class="row">
-        <div>
-            <h2>Categories</h2>
-            <ul>
-                <li><a href="{% url 'store' %}">All</a></li>
-                {% for category in categories %}
-                    <li><a href="?category={{ category.id }}">{{ category.name }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
+  <h1>Search Results</h1>
+  {% if products %}
+    <ul>
+      <div class="row">
         {% for product in products %}
-        <div class="col-lg-4" style="margin-bottom: 20px">
+        <div class="col-lg-4">
             <img class="thumbnail" src="{{product.imageURL}}">
             <div class="box-element product">
                 <h6><strong>{{ product.name }}</strong></h6>
@@ -24,4 +19,8 @@
         </div>
         {% endfor %}
     </div>
-{% endblock content %}
+    </ul>
+  {% else %}
+    <p>No products found.</p>
+  {% endif %}
+{% endblock %}
